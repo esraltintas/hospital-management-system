@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var patientSchema = new Schema({
+var patientHistorySchema = new Schema({
     patient: {
         type: Schema.ObjectId,
         ref: 'patient'
@@ -18,4 +18,4 @@ var patientSchema = new Schema({
 
 });
 
-mongoose.model('patient', patientSchema);
+mongoose.model('patientHistory', patientHistorySchema);
