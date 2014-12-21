@@ -1,0 +1,87 @@
+body {
+  font-weight: 300;
+  background: #99FFCC;
+  font-family: 'Lato', sans-serif;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+a {
+  color: #00B7FF;
+}
+
+::-moz-selection {
+  color: white;
+  background: black;
+}
+
+::selection {
+  color: white;
+  background: black;
+}
+nav.menu {
+  background: #33CCFF;
+  color: white;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+nav.menu li {
+  float: left;
+  width: 200px;
+  text-align: center;
+}
+
+nav.menu li:hover {
+  background: rgba(0,0,0,0.2);
+}
+
+nav.menu li a {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  color: white;
+}
+
+nav.menu li a:hover {
+  text-decoration: none;
+}
+
+
+/* Table */
+.listTable {
+  width: 100%;
+  text-align: center;
+  background: #ffffff;
+  margin-bottom: 30px;
+}
+
+.listTable tr {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.listTable th {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid gray;
+}
+
+.listTable td {
+  height: 30px;
+  line-height: 30px;
+}
+
+.new label {
+  display: inline-block;
+  width: 120px;
+}
+
+.new select, .new input {
+  width: 200px;
+}

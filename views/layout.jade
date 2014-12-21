@@ -1,7 +1,28 @@
 doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+html(ng-app='hospital')
+    head
+        title= title
+        link(rel='stylesheet', href='/css/reset.css')
+        link(rel='stylesheet', href='/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/css/bootstrap-theme.min.css')
+        link(rel='stylesheet', href='/css/style.css')
+        link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic&subset=latin,latin-ext', rel='stylesheet', type='text/css')
+    body
+        nav.menu
+            ul
+                li
+                    a(href="#/") Hastalık Kayıt
+                li
+                    a(href="#/patients") Hastalar
+                li
+                    a(href="#/doctors") Doktorlar
+        div(ng-view)
+        script(src='/lib/angular.min.js')
+        script(src='/lib/ui-bootstrap-custom-0.11.2.min.js')
+        script(src='/lib/ui-bootstrap-custom-tpls-0.11.2.min.js')
+        script(src='/lib/angular-route.min.js')
+        script(src='/lib/angular-sanitize.js')
+        script(src='/js/app.js')
+        script(src='/js/controllers/HomeController.js')
+        script(src='/js/controllers/DoctorsController.js')
+        script(src='/js/controllers/PatientsController.js')

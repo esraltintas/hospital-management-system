@@ -1,0 +1,61 @@
+<div class="page patients">
+    <table class="listTable">
+        <tr>
+            <th> Adı </th>
+            <th> Soyadı</th>
+            <th> TC Kimlik </th>
+            <th> Uzmanlık </th>
+            <th> Görev </th>
+            <th> Adres </th>
+            <th>  </th>
+        </tr>
+        <tr ng-repeat="doctor in doctors">
+            <td ng-bind="doctor.name"></td>
+            <td ng-bind="doctor.surname"></td>
+            <td ng-bind="doctor.identityNumber"></td>
+            <td ng-bind="doctor.expertise"></td>
+            <td ng-bind="doctor.title"></td>
+            <td ng-bind="doctor.address"></td>
+            <td>
+                <button ng-click="deleteDoctor(doctor._id)"> Sil </button>
+            </td>
+        </tr>
+    </table>
+
+    <h4> Yeni Kayıt Ekle </h4>
+    <div class="new">
+        <form name="addForm">
+            <div class="formInput">
+                <label for="doctorName"> Doktor Adı </label>
+                <input type="text" ng-model="newDoctor.name" id="doctorName" required/>
+            </div>
+
+            <div class="formInput">
+                <label for="doctorSurname"> Doktor Soyadı </label>
+                <input type="text" ng-model="newDoctor.surname" id="doctorSurname" required/>
+            </div>
+
+            <div class="formInput">
+                <label for="doctorIdentity"> TC Kimlik No </label>
+                <input type="text" ng-model="newDoctor.identityNumber" id="doctorIdentity" ng-minlength="11" ng-maxlength="11" required/> <span>(11 Hane Olmalı)</span>
+            </div>
+
+            <div class="formInput">
+                <label for="doctorExpertise"> Uzmanlık </label>
+                <input type="text" ng-model="newDoctor.expertise" id="doctorExpertise" required/>
+            </div>
+
+            <div class="formInput">
+                <label for="doctorTitle"> Görev </label>
+                <input type="text" ng-model="newDoctor.title" id="doctorTitle" required/>
+            </div>
+
+            <div class="formInput">
+                <label for="patientAddress"> Address </label>
+                <input type="text" ng-model="newDoctor.address" id="patientAddress" required/>
+            </div>
+
+            <button ng-click="addForm.$valid && addNewDoctor(newDoctor)" ng-disabled="addForm.$invalid"> Kaydet </button>
+        </form>
+    </div>
+</div>

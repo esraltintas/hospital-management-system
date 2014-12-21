@@ -1,11 +1,12 @@
 var express = require('express');
 var path = require('path');
-var mongoose = require('mongoose');
-var fs = require('fs');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
+var favicon = require('static-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+var Doctor = require('./models/Doctor');
+var Patient = require('./models/Patient');
+var PatientHistory = require('./models/PatientHistory');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -16,66 +17,141 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+app.use(favicon());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
 app.use('/', routes);
+app.use('/users', users);
 
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
 
+/* Doctor Requests */
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-
-    app.use(express.errorHandler());
-    mongoose.connect('mongodb://55.55.55.5/mongo');
-}
-
-//load all files in models
-
-fs.readdirSync(__dirname + '/models').forEach( function(filename) {
-    if (~filename.indexOf('.js')) require(__dirname + '/models' + filename)
-});
-
-app.get('/users', function(req, res){
-    mongoose.model('users').find( function(err, users) {
-        res.send(users);
+// Get Doctors
+app.get('/doctors', function(req, res){
+    Doctor.find(function(err, doctors) {
+        res.send(doctors);
     });
-
 });
 
-app.get('/posts/:userId', function(req, res){
-    mongoose.model('posts').find({user: req.params.userId}, function(err, posts) {
-        mongoose.model(posts).populate(posts, { path: 'user'}, function (err, posts) {
-            res.send('posts');
+// Get a Doctor
+app.get('/doctor/:id', function(req, res){
+    Doctor.getById(req.params.id, function(err, doctor) {
+        res.send(doctor);
+    });
+});
+
+// Create New Doctor
+app.post('/doctor', function(req, res) {
+    Doctor.create(req.body, function(err, doctor) {
+        res.send(doctor);
+    });
+});
+
+// Update a Doctor
+app.put('/doctor/:id', function(req, res) {
+    Doctor.editById(req.params.id, req.body, function(err, doctor) {
+        res.send(doctor);
+    });
+});
+
+// Delete a Doctor
+app.delete('/doctor/:id', function(req, res) {
+    Doctor.delById(req.params.id, function(err, doctor) {
+        Doctor.find(function(err, doctors) {
+            res.send(doctors);
         });
     });
 });
 
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
+
+/* Patient Requests */
+
+// Get All Patients
+app.get('/patients', function(req, res){
+    Patient.find(function(err, patients) {
+        res.send(patients);
+    });
+});
+
+//Todo: Complete all patient requests.
+
+// Get a Patient
+app.get('/patient/:id', function(req, res){
+    Patient.getById(req.params.id, function(err, patients) {
+        res.send(patients);
+    });
+});
+
+// Create New Patient
+app.post('/patient', function(req, res) {
+    Patient.create(req.body, function(err, patient) {
+        res.send(patient);
+    });
+});
+
+// Update a Patient
+app.put('/patient/:id', function(req, res) {
+    Patient.editById(req.params.id, req.body, function(err, patient) {
+        res.send(patient);
+    });
+});
+
+// Delete a Patient
+app.delete('/patient/:id', function(req, res) {
+    Patient.delById(req.params.id, function(err, patient) {
+        Patient.find(function(err, patient) {
+            res.send(patient);
+        });
+    });
+});
+
+
+
+/* Records Requests */
+
+// Get All Records
+app.get('/records', function(req, res){
+    PatientHistory.findAll(function(err, histories) {
+        res.send(histories);
+    });
+});
+
+// Get a Record
+app.get('/record/:id', function(req, res){
+    PatientHistory.getById(req.params.id, function(err, history) {
+        res.send(history);
+    });
+});
+
+// Create New Record
+app.post('/record', function(req, res) {
+    PatientHistory.create(req.body, function(err, record) {
+        PatientHistory.getById(record._id, function(err, history) {
+            res.send(history);
+        });
+    });
+});
+
+//Todo: Complete all record requests.
+
+// Update a PatientHistory
+app.put('/record/:id', function(req, res) {
+    PatientHistory.editById(req.params.id, req.body, function(err, record) {
+        res.send(record);
+    });
+});
+
+// Delete a PatientHistory
+app.delete('/record/:id', function(req, res) {
+    PatientHistory.delById(req.params.id, function(err, record) {
+        PatientHistory.find(function(err, record) {
+            res.send(record);
+        });
     });
 });
 

@@ -1,0 +1,41 @@
+<div class="page home">
+    <table class="listTable">
+        <tr>
+            <th> Hasta </th>
+            <th> Doktor </th>
+            <th> Hastalık </th>
+            <th> Tarih </th>
+        </tr>
+        <tr ng-repeat="record in patientHistory">
+            <td ng-bind="record.patient.name" ng-bind="record.patient.surname"></td>
+            <td ng-bind="record.doctor.name" ng-bind="record.doctor.surname"></td>
+            <td ng-bind="record.disease"></td>
+            <td> {{record.date | date: 'dd MMMM yyyy'}} </td>
+            <td>
+                <button ng-click="deleteRecord(record._id)"> Sil </button>
+            </td>
+        </tr>
+    </table>
+
+    <h4> Yeni Kayıt Ekle </h4>
+    <div class="new">
+        <form name="addForm">
+            <div class="formInput">
+                <label for="doctorName"> Doktor </label>
+                <select id="doctorName" ng-model="newRecord.doctor" ng-options="doctor._id as doctor.name + ' ' + doctor.surname for doctor in doctors" required></select>
+            </div>
+
+            <div class="formInput">
+                <label for="patientName"> Hasta</label>
+                <select id="patientName" ng-model="newRecord.patient" ng-options="patient._id as patient.name + ' ' + patient.surname for patient in patients" required></select>
+            </div>
+
+            <div class="formInput">
+                <label for="disease"> Hastalık </label>
+                <input type="text" ng-model="newRecord.disease" id="disease" required/>
+            </div>
+
+            <button ng-click="addForm.$valid && addNewRecord(newRecord)" ng-disabled="addForm.$invalid"> Kaydet </button>
+        </form>
+    </div>
+</div>

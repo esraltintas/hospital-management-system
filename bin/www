@@ -1,9 +1,20 @@
 #!/usr/bin/env node
-var debug = require('debug')('nodejs');
 var app = require('../app');
+var mongoose = require('mongoose');
 
-app.set('port', process.env.PORT || 3000);
+var mongoConnectionString = 'mongodb://localhost/hospital';
 
-var server = app.listen(app.get('port'), function() {
-  debug('Express server listening on port ' + server.address().port);
+mongoose.connect(mongoConnectionString);
+mongoose.connection.on('error', function(err) {
+  console.log('MongoDB returned error.', err);
+  process.exit(1);
+});
+
+mongoose.connection.once('open', function() {
+  console.log('MongoDB connection successful.');
+  app.set('port', process.env.PORT || 3000);
+
+  var server = app.listen(app.get('port'), function() {
+    console.log('Express server listening on port ' + server.address().port);
+  });
 });
